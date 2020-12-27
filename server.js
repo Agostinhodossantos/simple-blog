@@ -1,10 +1,15 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express();
 const articleRouter = require('./routes/article')
 
+mongoose.connect('mongodb://localhost/blog' , {
+    useNewUrlParser: true , useUnifiedTopology: true
+})
+
 app.set('view engine' , 'ejs')
 
-app.use('/articles', articleRouter)
+app.use('/article', articleRouter)
 
 app.get('/' , (req , res) => {
     const articles = [{
@@ -20,7 +25,7 @@ app.get('/' , (req , res) => {
 
 
 ]
-    res.render('index' , {articles : articles}) 
+    res.render('articles/index' , {articles : articles}) 
 })
 
 app.listen(5000)
